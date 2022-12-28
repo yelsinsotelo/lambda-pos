@@ -3,5 +3,5 @@ export interface HTTPResponseGetDataCard {
     card_number: string;
     expiration_year: string;
     expiration_month: string;
-    created_at: Date
+    created_at: Date;
 }

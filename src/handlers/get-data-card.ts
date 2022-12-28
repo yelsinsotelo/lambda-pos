@@ -63,11 +63,11 @@ const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
                 }),
             };
         }
-        const responseData: HTTPResponseGetDataCard | null = await findDataCreditCardByTokenUseCase().run(body.token)
+        const responseData: HTTPResponseGetDataCard | null = await findDataCreditCardByTokenUseCase().run(body.token);
         if (responseData) {
             const currentDate: Date = new Date();
-            const responseDate: Date = responseData.created_at instanceof Date ? responseData.created_at :new Date(responseData.created_at);
-            const timeExpire: number = parseInt(process.env.TOKEN_EXPIRATION_TIME || "900") || 0;
+            const responseDate: Date = responseData.created_at;
+            const timeExpire: number = parseInt(process.env.TOKEN_EXPIRATION_TIME || '900') || 0;
             if ((currentDate.getTime() - responseDate.getTime()) / 1000 < timeExpire) {
                 response = {
                     statusCode: 200,
@@ -77,20 +77,18 @@ const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPro
                 response = {
                     statusCode: 409,
                     body: JSON.stringify({
-                        message: "El token no es válido, solicite uno nuevamente"
+                        message: 'El token no es válido, solicite uno nuevamente',
                     }),
                 };
             }
-
         } else {
             response = {
                 statusCode: 409,
                 body: JSON.stringify({
-                    message: "El token no es válido, solicite uno nuevamente"
+                    message: 'El token no es válido, solicite uno nuevamente',
                 }),
             };
         }
-
     } catch (err: unknown) {
         console.error(err);
         response = {

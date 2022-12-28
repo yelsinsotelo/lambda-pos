@@ -33,7 +33,7 @@ const validateRequest = (body: HTTPRequestTokenDTO): boolean => {
     return valid && validCardNo;
 };
 const validateHeader = (headers: APIGatewayProxyEventHeaders): boolean => {
-    const token = headers['Authorization']?.replace('Bearer ','');
+    const token = headers['Authorization']?.replace('Bearer ', '');
     if (token !== undefined) {
         const arrayToken: string[] = token.split('_');
         const prefix: string = arrayToken[0] || '';
